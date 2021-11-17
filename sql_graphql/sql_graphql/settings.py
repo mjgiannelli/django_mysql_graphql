@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# in order to sucessfully migrate data to db, need to add name of app to installed apps dictionary
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'backend',
 ]
 
 MIDDLEWARE = [
