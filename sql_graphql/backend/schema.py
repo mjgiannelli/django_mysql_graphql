@@ -30,7 +30,7 @@ class Query(graphene.ObjectType):
     def resolve_employee(root, info, id):
         return Employee.objects.get(id=id)
 
-class EmployeeMutation(graphene.Mutation):
+class AddEmployee(graphene.Mutation):
 
     class Arguments:
         f_name = graphene.String(required=True)
@@ -43,10 +43,31 @@ class EmployeeMutation(graphene.Mutation):
     def mutate(cls, root, info, f_name, l_name):
         employee = Employee(f_name=f_name, l_name=l_name)
         employee.save()
-        return EmployeeMutation(employee=employee)
+        return AddEmployee(employee=employee)
+
+class UpdateEmployee(graphene.Mutation):
+
+    class Arguments:
+        id = graphene.ID()
+        f_name = graphene.String(required=True)
+        l_name = graphene.String(required=True)
+
+    employee = graphene.Field(EmployeeType)
+
+    @classmethod
+    def mutate(cls, root, info, f_name, l_name, id):
+        employee = Employee.objects.get(id=id)
+
+        employee.f_name = f_name
+        employee.l_name = l_name
+
+        employee.save()
+
+        return UpdateEmployee(employee=employee)
 
 class Mutation(graphene.ObjectType):
 
-    add_employee = EmployeeMutation.Field()
+    add_employee = AddEmployee.Field()
+    update_employee = UpdateEmployee.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
