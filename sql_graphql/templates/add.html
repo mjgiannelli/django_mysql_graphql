@@ -1,0 +1,10 @@
+<h1>Enter Employee Name to add to DB</h1>
+
+<form method='POST' action='add'>
+    {% csrf_token %}
+    <p>First Name:</p>
+    <input type='text' name="firstname"/>
+    <p>Last Name:</p>
+    <input type='text' name="lastname"/>
+    <input type="submit"/>
+</form>

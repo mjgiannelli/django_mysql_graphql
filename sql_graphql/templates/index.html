@@ -1,0 +1,8 @@
+<h1>Here is your list of Employees: </h1>
+
+{% for employee in employees %}
+<li>{{employee.f_name}} {{employee.l_name}}</li>
+{% endfor %}
+<br>
+<a href="/add">Add an Employee</a>
+
