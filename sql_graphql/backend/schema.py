@@ -38,10 +38,12 @@ class EmployeeMutation(graphene.Mutation):
     
     employee = graphene.Field(EmployeeType)
 
+    # adding a class method to build a function
     @classmethod
-    def mutate(root, info, f_name):
-        employee = Employee(f_name=f_name)
+    def mutate(cls, root, info, f_name, l_name):
+        employee = Employee(f_name=f_name, l_name=l_name)
         employee.save()
+        return EmployeeMutation(employee=employee)
 
 class Mutation(graphene.ObjectType):
 
