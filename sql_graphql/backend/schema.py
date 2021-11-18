@@ -65,9 +65,25 @@ class UpdateEmployee(graphene.Mutation):
 
         return UpdateEmployee(employee=employee)
 
+class DeleteEmployee(graphene.Mutation):
+
+    class Arguments:
+        id = graphene.ID()
+    
+    employee = graphene.Field(EmployeeType)
+
+    @classmethod
+    def mutate(cls, root, info, id):
+        employee = Employee.objects.get(id=id)
+
+        employee.delete()
+
+        return 'Employee ' + id + ' deleted from db'
+        
 class Mutation(graphene.ObjectType):
 
     add_employee = AddEmployee.Field()
     update_employee = UpdateEmployee.Field()
+    delete_employee = DeleteEmployee.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
